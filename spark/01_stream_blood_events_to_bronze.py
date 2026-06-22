@@ -1,3 +1,4 @@
+import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
@@ -12,6 +13,22 @@ spark = (
     .config(
         "spark.sql.catalog.spark_catalog",
         "org.apache.spark.sql.delta.catalog.DeltaCatalog"
+    )
+    .config(
+        "spark.hadoop.fs.s3a.impl",
+        "org.apache.hadoop.fs.s3a.S3AFileSystem"
+    )
+    .config(
+        "spark.hadoop.fs.s3a.access.key",
+        os.getenv("AWS_ACCESS_KEY_ID")
+    )
+    .config(
+        "spark.hadoop.fs.s3a.secret.key",
+        os.getenv("AWS_SECRET_ACCESS_KEY")
+    )
+    .config(
+        "spark.hadoop.fs.s3a.endpoint",
+        "s3.us-east-2.amazonaws.com"
     )
     .getOrCreate()
 )
@@ -53,8 +70,10 @@ bronze_df = (
     .outputMode("append")
     .option(
         "checkpointLocation",
-        "/data/checkpoints/bronze"
+        "s3a://blood-supply-intelligence-lakehouse/checkpoints/bronze"
     )
-    .start("/data/bronze")
+    .start(
+        "s3a://blood-supply-intelligence-lakehouse/bronze"
+    )
     .awaitTermination()
 )
