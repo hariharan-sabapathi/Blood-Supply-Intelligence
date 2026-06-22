@@ -4,7 +4,7 @@
 
 The Real-Time Blood Supply Intelligence Platform is an end-to-end streaming data engineering project that simulates blood inventory and demand events, processes them through a Medallion Architecture (Bronze, Silver, Gold), and delivers operational insights through Power BI dashboards.
 
-The platform leverages Apache Kafka for event streaming, PySpark Structured Streaming for real-time processing, Delta Lake for reliable storage, Docker for containerization, and Power BI for analytics visualization.
+The platform leverages Apache Kafka for event streaming, PySpark Structured Streaming for real-time data processing, Delta Lake on AWS S3 for scalable and reliable storage, Docker for containerized deployment, and Power BI for analytics and visualization.
 
 ## Architecture
 
@@ -18,13 +18,13 @@ Apache Kafka
 PySpark Structured Streaming
         │
         ▼
-Bronze Layer (Raw Events)
+Bronze Layer - Raw Events (Delta Lake on AWS S3)
         │
         ▼
-Silver Layer (Validated & Cleaned Data)
+Silver Layer - Validated & Cleaned Data (Delta Lake on AWS S3)
         │
         ▼
-Gold Layer (Business Aggregations)
+Gold Layer - Business Aggregations (Delta Lake on AWS S3)
         │
         ▼
 Power BI Dashboard
@@ -38,7 +38,7 @@ Power BI Dashboard
 | ----------------- | --------------------------------------------- |
 | Streaming         | Apache Kafka                                  |
 | Processing        | PySpark Structured Streaming                  |
-| Storage           | Delta Lake                                    |
+| Storage           | Delta Lake, AWS S3                                    |
 | Containerization  | Docker, Docker Compose                        |
 | Programming       | Python                                        |
 | Analytics         | Power BI                                      |
@@ -199,11 +199,11 @@ blood-supply-intelligence-platform/
 
 * Real-time event ingestion using Apache Kafka
 * Structured Streaming with PySpark
-* Delta Lake implementation for reliable storage
-* Medallion Architecture design pattern
+* Delta Lake storage on AWS S3
+* Medallion Architecture (Bronze, Silver, Gold)
+* Cloud-native data lake design
 * Containerized deployment with Docker
 * Power BI analytics dashboard
-* End-to-end streaming data pipeline
 
 ---
 
